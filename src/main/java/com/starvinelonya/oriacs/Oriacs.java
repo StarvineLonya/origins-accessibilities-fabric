@@ -2,8 +2,6 @@ package com.starvinelonya.oriacs;
 
 import com.starvinelonya.oriacs.registry.OriacsItems;
 import net.fabricmc.api.ModInitializer;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
