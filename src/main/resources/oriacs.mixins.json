@@ -4,6 +4,7 @@
   "package": "com.starvinelonya.oriacs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ZombieEntityMixin"
   ],
   "client": [
   ],

@@ -1,6 +1,7 @@
 package com.starvinelonya.oriacs.registry;
 
 import com.starvinelonya.oriacs.Oriacs;
+import com.starvinelonya.oriacs.item.UmbrellaItem;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -9,7 +10,7 @@ import net.minecraft.util.Identifier;
 
 public class OriacsItems {
 
-    public static final Item UMBRELLA = registerModItem("umbrella", new Item(new FabricItemSettings()));
+    public static final UmbrellaItem UMBRELLA = (UmbrellaItem) registerModItem("umbrella", new UmbrellaItem(new FabricItemSettings()));
 
 
     public static Item registerModItem(String name, Item item){
