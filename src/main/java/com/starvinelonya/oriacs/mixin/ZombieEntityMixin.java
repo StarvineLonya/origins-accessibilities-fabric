@@ -27,7 +27,7 @@ public class ZombieEntityMixin extends HostileEntity {
         if (random.nextFloat() < (this.getWorld().getDifficulty() == Difficulty.HARD ? 0.05F : 0.01F)) {
             int i = random.nextInt(3);
             if (i == 0) {
-                UmbrellaItem umbrellaItem = (UmbrellaItem) OriacsItems.UMBRELLA;
+                UmbrellaItem umbrellaItem = OriacsItems.UMBRELLA;
                 ItemStack stack = umbrellaItem.getDefaultStack();
                 umbrellaItem.setColor(stack, random.nextInt(0xFFFFFF));
                 this.equipStack(EquipmentSlot.OFFHAND, stack);
