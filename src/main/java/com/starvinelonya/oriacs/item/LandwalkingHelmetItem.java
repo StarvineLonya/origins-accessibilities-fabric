@@ -6,6 +6,7 @@
  import io.github.apace100.origins.power.OriginsPowerTypes;
  import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
  import net.minecraft.block.BlockState;
+ import net.minecraft.block.Blocks;
  import net.minecraft.block.FluidFillable;
  import net.minecraft.block.LeveledCauldronBlock;
  import net.minecraft.block.cauldron.CauldronBehavior;
@@ -18,12 +19,12 @@
  import net.minecraft.entity.effect.StatusEffects;
  import net.minecraft.entity.player.PlayerEntity;
  import net.minecraft.fluid.Fluids;
- import net.minecraft.item.BucketItem;
- import net.minecraft.item.ItemStack;
- import net.minecraft.item.Items;
+ import net.minecraft.item.*;
  import net.minecraft.nbt.NbtCompound;
+ import net.minecraft.sound.SoundCategory;
  import net.minecraft.sound.SoundEvents;
  import net.minecraft.stat.Stats;
+ import net.minecraft.util.ActionResult;
  import net.minecraft.util.Hand;
  import net.minecraft.util.TypedActionResult;
  import net.minecraft.util.hit.BlockHitResult;
@@ -32,8 +33,7 @@
  import net.minecraft.util.math.Direction;
  import net.minecraft.world.RaycastContext;
  import net.minecraft.world.World;
-
- import static net.minecraft.block.cauldron.CauldronBehavior.emptyCauldron;
+ import net.minecraft.world.event.GameEvent;
 
 
  @MethodsReturnNonnullByDefault
@@ -42,7 +42,7 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
 
     public LandwalkingHelmetItem(FabricItemSettings settings) {
         super(OriacsArmorMaterials.DIVING, Type.HELMET, settings);
-        CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.put(this, (state, world, pos, player, hand, stack) -> emptyCauldron(state, world, pos, player, hand, stack, this.transformToDiving(stack), (statex) -> statex.get(LeveledCauldronBlock.LEVEL) == 3, SoundEvents.ITEM_BUCKET_FILL));
+        CauldronBehavior.EMPTY_CAULDRON_BEHAVIOR.put(this, (state, world, pos, player, hand, stack) -> fillCauldron(world, pos, player, hand, stack, Blocks.WATER_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, 3)));
     }
 
     public ItemStack transformToDiving(ItemStack original) {
@@ -101,5 +101,19 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
                  }
              }
          }
+     }
+
+     ActionResult fillCauldron(World world, BlockPos pos, PlayerEntity player, Hand hand, ItemStack stack, BlockState state) {
+         if (!world.isClient) {
+             Item item = stack.getItem();
+             player.setStackInHand(hand, ItemUsage.exchangeStack(stack, player, this.transformToDiving(stack)));
+             player.incrementStat(Stats.FILL_CAULDRON);
+             player.incrementStat(Stats.USED.getOrCreateStat(item));
+             world.setBlockState(pos, state);
+             world.playSound(null, pos, SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0F, 1.0F);
+             world.emitGameEvent(null, GameEvent.FLUID_PLACE, pos);
+         }
+
+         return ActionResult.success(world.isClient);
      }
  }

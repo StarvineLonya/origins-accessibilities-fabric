@@ -1,5 +1,6 @@
 package com.starvinelonya.oriacs;
 
+import com.starvinelonya.oriacs.registry.OriacsItemGroups;
 import com.starvinelonya.oriacs.registry.OriacsItems;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
@@ -16,6 +17,7 @@ public class Oriacs implements ModInitializer {
     @Override
     public void onInitialize() {
         OriacsItems.registerModItems();
+        OriacsItemGroups.addItemsToItemGroup();
         AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
             //
             return ActionResult.PASS;
