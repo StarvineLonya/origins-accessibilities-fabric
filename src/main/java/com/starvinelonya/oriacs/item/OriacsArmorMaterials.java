@@ -65,7 +65,6 @@ public enum OriacsArmorMaterials implements ArmorMaterial {
     }
 
 
-
     @Override
     public int getDurability(ArmorItem.Type type) {
         return durabilities[type.ordinal()];

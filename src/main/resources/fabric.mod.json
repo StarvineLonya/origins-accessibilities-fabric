@@ -3,13 +3,16 @@
   "id": "oriacs",
   "version": "${version}",
 
-  "name": "oriacs",
-  "description": "",
-  "authors": [],
+  "name": "Origins: Accessbilities",
+  "description": "An add-on for the Origins mod making your Origins life easier",
+  "authors": [
+    "LimonBlaze",
+    "StarvineLonya"
+  ],
   "contact": {},
 
   "license": "MIT",
-  "icon": "assets/oriacs/icon.png",
+  "icon": "assets/oriacs/pack.png",
 
   "environment": "*",
   "entrypoints": {

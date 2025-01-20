@@ -31,7 +31,7 @@ public class UmbrellaItem extends Item implements DyeableItem, Vanishable {
 
     public static boolean canKeepOutRain(LivingEntity entity) {
         ItemStack stack = entity.getMainHandStack();
-        if(stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutRain(stack)) return true;
+        if (stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutRain(stack)) return true;
         stack = entity.getOffHandStack();
         return stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutRain(stack);
     }
@@ -44,7 +44,7 @@ public class UmbrellaItem extends Item implements DyeableItem, Vanishable {
 
     public static boolean canKeepOutSunlight(LivingEntity entity) {
         ItemStack stack = entity.getMainHandStack();
-        if(stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutSunlight(stack)) return true;
+        if (stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutSunlight(stack)) return true;
         stack = entity.getOffHandStack();
         return stack.getItem() instanceof UmbrellaItem umbrella && umbrella.canKeepOutSunlight(stack);
     }
@@ -87,16 +87,14 @@ public class UmbrellaItem extends Item implements DyeableItem, Vanishable {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         BlockPos blockPos = entity.getBlockPos();
         boolean isInRain = world.hasRain(blockPos) || entity.getWorld().hasRain(BlockPos.ofFloored(blockPos.getX(), entity.getBoundingBox().maxY, blockPos.getZ()));
-        ;
         if (slot == EquipmentSlot.MAINHAND.getEntitySlotId()) {
             if (isInRain) {
                 stack.setDamage(MathHelper.clamp(stack.getDamage() + 1, 0, stack.getMaxDamage()));
-            }else{
+            } else {
                 stack.setDamage(MathHelper.clamp(stack.getDamage() - 1, 0, stack.getMaxDamage()));
             }
         }
     }
-
 
 
 }

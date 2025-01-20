@@ -4,6 +4,12 @@
   "package": "com.starvinelonya.oriacs.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "AirCurrentMixin",
+    "EntityConditionsMixin",
+    "EntityMixin",
+    "LivingEntityMixin",
+    "MobEntityMixin",
+    "PotionEntityMixin",
     "ZombieEntityMixin"
   ],
   "client": [

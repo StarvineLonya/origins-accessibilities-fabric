@@ -2,6 +2,8 @@ package com.starvinelonya.oriacs;
 
 import com.starvinelonya.oriacs.registry.OriacsItemGroups;
 import com.starvinelonya.oriacs.registry.OriacsItems;
+import com.starvinelonya.oriacs.registry.OriacsMobEffects;
+import com.starvinelonya.oriacs.registry.OriacsPotions;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback;
 import net.minecraft.util.ActionResult;
@@ -13,13 +15,14 @@ public class Oriacs implements ModInitializer {
     public static final String MOD_ID = "oriacs";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-
     @Override
     public void onInitialize() {
         OriacsItems.registerModItems();
         OriacsItemGroups.addItemsToItemGroup();
+        OriacsMobEffects.registerMobEffects();
+        OriacsPotions.registerPotions();
+
         AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
-            //
             return ActionResult.PASS;
         });
     }

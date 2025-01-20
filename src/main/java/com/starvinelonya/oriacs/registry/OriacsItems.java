@@ -20,9 +20,12 @@ public class OriacsItems {
     public static final OriacsArmorItem CHAINMEMBRANE_CHESTPLATE = (OriacsArmorItem) registerModItem("chainmembrane_chestplate", new OriacsArmorItem(OriacsArmorMaterials.CHAINMEMBRANE, ArmorItem.Type.CHESTPLATE, new FabricItemSettings()));
     public static final OriacsArmorItem CHAINMEMBRANE_LEGGINGS = (OriacsArmorItem) registerModItem("chainmembrane_leggings", new OriacsArmorItem(OriacsArmorMaterials.CHAINMEMBRANE, ArmorItem.Type.LEGGINGS, new FabricItemSettings()));
     public static final OriacsArmorItem CHAINMEMBRANE_BOOTS = (OriacsArmorItem) registerModItem("chainmembrane_boots", new OriacsArmorItem(OriacsArmorMaterials.CHAINMEMBRANE, ArmorItem.Type.BOOTS, new FabricItemSettings()));
-    public static Item registerModItem(String name, Item item){
+
+
+    public static Item registerModItem(String name, Item item) {
         return Registry.register(Registries.ITEM, new Identifier(Oriacs.MOD_ID, name), item);
     }
+
     public static void registerModItems() {
         Oriacs.LOGGER.info("Registering Mod Items for " + Oriacs.MOD_ID);
     }
