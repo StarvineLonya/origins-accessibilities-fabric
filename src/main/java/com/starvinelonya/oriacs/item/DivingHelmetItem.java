@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.FluidDrainable;
 import net.minecraft.block.LeveledCauldronBlock;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -20,6 +21,9 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
@@ -29,6 +33,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 import static net.minecraft.block.cauldron.CauldronBehavior.WATER_CAULDRON_BEHAVIOR;
 import static net.minecraft.block.cauldron.CauldronBehavior.emptyCauldron;
@@ -46,6 +53,7 @@ public class DivingHelmetItem extends OriacsArmorItem {
 
     public ItemStack transformToLandwalking(ItemStack original) {
         ItemStack transformed = OriacsItems.LANDWALKING_HELMET.getDefaultStack();
+        original.getOrCreateNbt().putInt(TRANSFORM_PROGRESS, 0);
         transformed.setNbt(original.getOrCreateNbt());
         return transformed;
     }
@@ -95,5 +103,10 @@ public class DivingHelmetItem extends OriacsArmorItem {
                 entity.equipStack(EquipmentSlot.HEAD, transformed);
             }
         }
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip", stack.getOrCreateNbt().getInt(TRANSFORM_PROGRESS)).setStyle(Style.EMPTY.withFormatting(Formatting.GRAY)));
     }
 }

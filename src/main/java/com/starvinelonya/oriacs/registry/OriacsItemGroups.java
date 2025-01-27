@@ -14,5 +14,6 @@ public class OriacsItemGroups {
             content.add(OriacsItems.CHAINMEMBRANE_LEGGINGS);
             content.add(OriacsItems.CHAINMEMBRANE_BOOTS);
         });
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(content -> content.add(OriacsItems.FRESH_AIR_BOTTLE));
     }
 }

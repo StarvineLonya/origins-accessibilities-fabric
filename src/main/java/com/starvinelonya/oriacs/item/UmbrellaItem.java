@@ -3,7 +3,6 @@ package com.starvinelonya.oriacs.item;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.block.cauldron.CauldronBehavior;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.DyeableItem;
@@ -11,6 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.tag.BiomeTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -87,10 +87,14 @@ public class UmbrellaItem extends Item implements DyeableItem, Vanishable {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
         BlockPos blockPos = entity.getBlockPos();
         boolean isInRain = world.hasRain(blockPos) || entity.getWorld().hasRain(BlockPos.ofFloored(blockPos.getX(), entity.getBoundingBox().maxY, blockPos.getZ()));
-        if (slot == EquipmentSlot.MAINHAND.getEntitySlotId()) {
+        if (!world.isClient && entity.age % 20 == 0 && entity instanceof LivingEntity living && (living.getMainHandStack() == stack || living.getOffHandStack() == stack)) {
             if (isInRain) {
                 stack.setDamage(MathHelper.clamp(stack.getDamage() + 1, 0, stack.getMaxDamage()));
-            } else {
+            }
+            else if (world.getBiome(entity.getBlockPos()).isIn(BiomeTags.SNOW_GOLEM_MELTS)){
+                stack.setDamage(MathHelper.clamp(stack.getDamage() - 2, 0, stack.getMaxDamage()));
+            }
+            else {
                 stack.setDamage(MathHelper.clamp(stack.getDamage() - 1, 0, stack.getMaxDamage()));
             }
         }

@@ -2,6 +2,7 @@ package com.starvinelonya.oriacs.mixin;
 
 import com.starvinelonya.oriacs.item.UmbrellaItem;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,10 +19,8 @@ public abstract class EntityMixin {
 
     @Inject(method = "isBeingRainedOn", at = @At("HEAD"), cancellable = true)
     private void oriacs$checkUmbrella(CallbackInfoReturnable<Boolean> cir) {
-        for (ItemStack stack : this.getHandItems()) {
-            if (stack.getItem() instanceof UmbrellaItem) {
-                cir.setReturnValue(false);
-            }
+        if ((Object) this instanceof LivingEntity living && UmbrellaItem.canKeepOutRain(living)) {
+            cir.setReturnValue(false);
         }
     }
 

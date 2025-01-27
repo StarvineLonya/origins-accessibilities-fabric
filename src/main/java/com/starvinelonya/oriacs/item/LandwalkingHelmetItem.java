@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.LeveledCauldronBlock;
 import net.minecraft.block.cauldron.CauldronBehavior;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.Enchantments;
 import net.minecraft.entity.Entity;
@@ -24,7 +25,10 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.hit.BlockHitResult;
@@ -34,6 +38,9 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 
 @MethodsReturnNonnullByDefault
@@ -47,6 +54,7 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
 
     public ItemStack transformToDiving(ItemStack original) {
         ItemStack transformed = OriacsItems.DIVING_HELMET.getDefaultStack();
+        original.getOrCreateNbt().putInt(TRANSFORM_PROGRESS, 0);
         transformed.setNbt(original.getOrCreateNbt());
         return transformed;
     }
@@ -113,5 +121,10 @@ public class LandwalkingHelmetItem extends OriacsArmorItem {
         }
 
         return ActionResult.success(world.isClient);
+    }
+
+    @Override
+    public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
+        tooltip.add(Text.translatable(stack.getTranslationKey() + ".tooltip", stack.getOrCreateNbt().getInt(TRANSFORM_PROGRESS)).setStyle(Style.EMPTY.withFormatting(Formatting.GRAY)));
     }
 }
