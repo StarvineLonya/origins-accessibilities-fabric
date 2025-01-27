@@ -12,11 +12,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin {
-
-
-    @Shadow
-    public abstract Iterable<ItemStack> getHandItems();
-
     @Inject(method = "isBeingRainedOn", at = @At("HEAD"), cancellable = true)
     private void oriacs$checkUmbrella(CallbackInfoReturnable<Boolean> cir) {
         if ((Object) this instanceof LivingEntity living && UmbrellaItem.canKeepOutRain(living)) {
